@@ -1,0 +1,45 @@
+<domain type='kvm'>
+  <name>debian8-base</name>
+  <memory unit='KiB'>512000</memory>
+  <currentMemory unit='KiB'>512000</currentMemory>
+  <vcpu placement='static'>1</vcpu>
+  <os>
+    <type>hvm</type>
+    <boot dev='hd'/>
+  </os>
+  <features>
+    <acpi/>
+    <apic/>
+    <pae/>
+  </features>
+  <clock offset='utc'>
+    <timer name='rtc' tickpolicy='catchup'/>
+    <timer name='pit' tickpolicy='delay'/>
+    <timer name='hpet' present='no'/>
+  </clock>
+  <on_poweroff>destroy</on_poweroff>
+  <on_reboot>restart</on_reboot>
+  <on_crash>destroy</on_crash>
+  <devices>
+    <disk type='file' device='disk'>
+      <driver name='qemu' type='raw' cache='none' io='native'/>
+      <source file='/var/lib/libvirt/images/base/debian8.img'/>
+      <target dev='vda' bus='virtio'/>
+    </disk>
+    <interface type='network'>
+      <mac address='52:54:00:00:00:00'/>
+      <source network='int-bridge'/>
+      <model type='virtio'/>
+    </interface>
+    <input type='tablet' bus='usb'/>
+    <input type='mouse' bus='ps2'/>
+    <graphics type='spice' autoport='yes'/>
+    <video>
+      <model type='qxl' ram='65536' vram='65536' heads='1'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x02' function='0x0'/>
+    </video>
+    <memballoon model='virtio'>
+    </memballoon>
+  </devices>
+</domain>
+
